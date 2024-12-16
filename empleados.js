@@ -1,5 +1,5 @@
 // Detecta el entorno (local o nube) y establece la URL correcta
-const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://mi-web-delta.vercel.app/';
+const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://mi-web-delta.vercel.app';
 
 fetch(`${baseURL}/empleados`)
     .then(response => {

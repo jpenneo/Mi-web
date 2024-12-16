@@ -4,7 +4,8 @@ const { Pool } = require('pg');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors(
+  {origin: ['http://localhost:3001', 'https://mi-web-delta.vercel.app'] }));
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -13,8 +14,8 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT || 5432,
   ssl: {
-    mode: 'require',  // Usar 'mode' en lugar de 'sslmode'
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, 
+    require: true,
   },
 });
 
@@ -40,8 +41,8 @@ app.get('/empleados', async (req, res) => {
     res.status(500).send('Error al obtener empleados');
   }
 });
-
-const port = 3001; // Cambiado a un puerto diferente
+// Cambiado a un puerto diferente
+const port = process.env.PORT|| 3001; 
 app.listen(port, () => {
   console.log(`Servidor Express en ejecución en http://localhost:${port}`);
 });
