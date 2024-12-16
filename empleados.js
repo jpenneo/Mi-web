@@ -1,4 +1,7 @@
-fetch('http://localhost:3001/empleados')
+// Detecta el entorno (local o nube) y establece la URL correcta
+const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://tu-dominio-en-vercel.vercel.app';
+
+fetch(`${baseURL}/empleados`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
@@ -16,3 +19,4 @@ fetch('http://localhost:3001/empleados')
     .catch(error => {
         console.error('Error en la solicitud:', error);
     });
+
