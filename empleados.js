@@ -1,12 +1,18 @@
-fetch('/empleados')
-//Aquí le indicamos cual queremos que sea nuestra salida de datos.
-  .then(response => response.json())
-  .then(data => {
-    const empleadosLista = document.getElementById('empleados-lista');
+fetch('http://localhost:3001/empleados')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const empleadosLista = document.getElementById('empleados-lista');
         data.forEach(empleado => {
-      const div = document.createElement('div');
-      //En esta sección colocamos las columnas que tiene nuestra base de datos.
-      div.innerHTML = `<p>${empleado.id_empleado} - ${empleado.nombre} - ${empleado.apellido}- ${empleado.edad}- ${empleado.salario}- ${empleado.id_departamento}</p>`;
-      empleadosLista.appendChild(div);
+            const div = document.createElement('div');
+            div.innerHTML = `<p>${empleado.id_empleado} - ${empleado.nombre} - ${empleado.apellido} - ${empleado.edad} - ${empleado.salario} - ${empleado.id_departamento}</p>`;
+            empleadosLista.appendChild(div);
+        });
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error);
     });
-  });

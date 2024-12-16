@@ -1,9 +1,19 @@
-// Esta sentencia es para esperar a que el documento esté totalmente cargado.
-document.addEventListener('DOMContentLoaded', function() {
-    // Aquí estamos selecionando el contenedor del documento, en donde nosotros queremos que se muestre nuestro mensaje, junto con el mensaje.
-    const app = document.getElementById('app').innerHTML = "Hola desde JavaScript";
-        // Verificar si el contenedor existe y agregar el párrafo.
+// Esta sentencia es para esperar a que el documento esté totalmente cargado. 
+document.addEventListener('DOMContentLoaded', function () {
+    // Seleccionamos el contenedor donde queremos mostrar el mensaje.
+    const app = document.getElementById('app');
+    
+    // Verificar si el contenedor existe.
     if (app) {
+        // Crear un nuevo párrafo.
+        const parrafo = document.createElement('p');
+        
+        // Agregar texto al párrafo.
+        parrafo.textContent = "Hola desde JavaScript";
+        
+        // Agregar el párrafo al contenedor.
         app.appendChild(parrafo);
+    } else {
+        console.error("No se encontró el contenedor con id 'app'");
     }
 });
