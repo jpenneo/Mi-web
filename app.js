@@ -1,21 +1,23 @@
-// Importar dependencias
-const express = require('express');
-const { Pool } = require('pg');
+//Esto carga las variables del archivo .env
+require('dotenv').config(); 
+// La dependencia para PostgreSQL
+const { Pool } = require('pg'); 
+// Importar la dependencia cors
+const cors = require('cors'); 
 
 // Crear la aplicación Express
 const app = express();
 
+// Habilitar CORS para todas las rutas
+app.use(cors());  // Esto permite que tu servidor acepte solicitudes desde otros dominios (por ejemplo, tu frontend)
+
 // Configuración de la conexión a la base de datos PostgreSQL
 const pool = new Pool({
-  //Debemos poner nuestro Usuario
-    user: 'postgres',        
-  // o la dirección de nuestra base de datos en caso de que esta no estuviese en local
-  host: 'localhost', 
-   //nombre de nuestra base de datos
-  database: 'empresa', 
- //colocamos nuestra contraseña 
-  password: '93JDyiTvHuRpQEaDV28U', 
-  // Puerto por defecto de PostgreSQL
+  //Debemos poner nuestras variables de entorno, para que no se vean nuestras credenciales en el código
+  user: process.env.DB_USER,       
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,   
   port: 5432,                 
 });
 
