@@ -1,4 +1,4 @@
-fetch('https://mi-web.vercel.app/empleados')
+fetch('https://mi-web-delta.vercel.app/empleados')
   .then(response => {
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
