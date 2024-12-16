@@ -19,4 +19,4 @@ fetch(`${baseURL}/empleados`)
     .catch(error => {
         console.error('Error en la solicitud:', error);
     });
-
+    
