@@ -1,4 +1,4 @@
-fetch('http://localhost:3001/empleados')
+fetch('/empleados')
 //Aquí le indicamos cual queremos que sea nuestra salida de datos.
   .then(response => {
     if (!response.ok) {
