@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
   client.connect()
     .then(() => {
       console.log('Conectado a la base de datos');
-      return client.query('SELECT * FROM users');
+      return client.query('SELECT * FROM empleados');
     })
     .then(res => {
       console.log('Resultado de la consulta:', res.rows);
