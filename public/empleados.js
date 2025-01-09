@@ -23,7 +23,7 @@ function renderEmployeeList(empleados) {
 
     // Crear y agregar elementos seguros
     const p = document.createElement('p');
-    p.textContent = `${empleado.id_empleado} - ${empleado.nombre} - ${empleado.apellido} - ${empleado.edad} - $${empleado.salario} - ${empleado.id_departamento}`;
+    p.textContent = `${empleado.id_empleado} -- ${empleado.nombre} -- ${empleado.apellido} -- ${empleado.edad} -- ${empleado.salario} €-- ${empleado.id_departamento}`;
     div.appendChild(p);
 
     empleadosLista.appendChild(div);

@@ -1,3 +1,4 @@
+// Realizar la solicitud fetch a la API de empleados
 fetch('/empleados')
   .then(response => {
     if (!response.ok) {
@@ -6,57 +7,74 @@ fetch('/empleados')
     return response.json();
   })
   .then(data => {
-    renderEmployeeList(data);
+    renderEmployeeTable(data); // Llamar a la función para renderizar la tabla
   })
   .catch(error => {
     console.error('Error en la solicitud:', error);
     showError('No se pudo cargar la lista de empleados. Por favor, intenta más tarde.');
   });
 
-// Función para renderizar la lista de empleados
-function renderEmployeeList(empleados) {
-  const empleadosLista = document.getElementById('empleados-lista');
-  empleadosLista.innerHTML = ''; // Limpiar contenido previo si lo hubiera
+// Función para renderizar la tabla de empleados
+function renderEmployeeTable(empleados) {
+  const empleadosContainer = document.getElementById('empleados-lista'); // Contenedor para la tabla
+  empleadosContainer.innerHTML = ''; // Limpiar contenido previo si lo hubiera
 
-  // Crear un contenedor UL para los empleados
-  const ul = document.createElement('ul');
+  // Crear la tabla y sus secciones
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
 
+  // Crear la fila de encabezados
+  const headerRow = document.createElement('tr');
+  const headers = ['ID', 'Nombre', 'Edad', 'Salario', 'Departamento'];
+
+  headers.forEach(headerText => {
+    const th = document.createElement('th');
+    th.textContent = headerText;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  // Crear las filas de los empleados
   empleados.forEach(empleado => {
-    const li = document.createElement('li');
+    const row = document.createElement('tr');
 
-    // Crear un contenedor DIV seguro para los detalles del empleado
-    const div = document.createElement('div');
+    // Crear celdas con los datos del empleado
+    const idCell = createCell(empleado.id_empleado);
+    const nombreCell = createCell(`${empleado.nombre} ${empleado.apellido}`);
+    const edadCell = createCell(empleado.edad);
+    const salarioCell = createCell(`${empleado.salario} €`);
+    const departamentoCell = createCell(empleado.id_departamento);
 
-    const id = createParagraph('ID:', empleado.id_empleado);
-    const nombre = createParagraph('Nombre:', `${empleado.nombre} ${empleado.apellido}`);
-    const edad = createParagraph('Edad:', empleado.edad);
-    const salario = createParagraph('Salario:', `$${empleado.salario}`);
-    const departamento = createParagraph('Departamento:', empleado.id_departamento);
+    // Agregar las celdas a la fila
+    row.appendChild(idCell);
+    row.appendChild(nombreCell);
+    row.appendChild(edadCell);
+    row.appendChild(salarioCell);
+    row.appendChild(departamentoCell);
 
-    // Agregar los detalles al contenedor
-    div.appendChild(id);
-    div.appendChild(nombre);
-    div.appendChild(edad);
-    div.appendChild(salario);
-    div.appendChild(departamento);
-
-    li.appendChild(div);
-    ul.appendChild(li);
+    // Agregar la fila al cuerpo de la tabla
+    tbody.appendChild(row);
   });
 
-  // Agregar la lista completa al contenedor
-  empleadosLista.appendChild(ul);
+  // Ensamblar la tabla
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+  // Agregar la tabla al contenedor
+  empleadosContainer.appendChild(table);
 }
 
-// Función para crear párrafos con información del empleado
-function createParagraph(label, value) {
-  const p = document.createElement('p');
-  p.innerHTML = `<strong>${label}</strong> ${value}`;
-  return p;
+// Función para crear una celda de tabla con datos
+function createCell(value) {
+  const td = document.createElement('td');
+  td.textContent = value;
+  return td;
 }
 
 // Función para mostrar un mensaje de error al usuario
 function showError(message) {
-  const empleadosLista = document.getElementById('empleados-lista');
-  empleadosLista.innerHTML = <p class="error">${message}</p>;
+  const empleadosContainer = document.getElementById('empleados-lista');
+  empleadosContainer.innerHTML = `<p class="error">${message}</p>`;
 }
+

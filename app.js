@@ -25,14 +25,22 @@ app.use(express.static('public'));
 // Ruta para obtener los empleados
 app.get('/empleados', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM empleados'); // Cambia 'empleados' por el nombre real de tu tabla
+    const result = await pool.query('SELECT * FROM empleados'); 
     res.json(result.rows);
   } catch (error) {
     console.error('Error al obtener empleados:', error.message);
     res.status(500).json({ error: 'Error al obtener empleados' });
   }
 });
-
+// Ruta para obtener los empleados
+app.get('/empleados', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM empleados'); 
+  } catch (error) {
+    console.error('Error al obtener empleados:', error.message);
+    res.status(500).json({ error: 'Error al obtener empleados' });
+  }
+});
 // Ruta para verificar la conexión a la base de datos
 app.get('/db-status', async (req, res) => {
   try {
@@ -47,7 +55,7 @@ app.get('/db-status', async (req, res) => {
   }
 });
 
-// Ruta para generar una página HTML dinámica
+// Ruta para obtener los datos
 app.get('/datos', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM empleados'); // Cambia los campos y tabla según tu base
@@ -69,3 +77,8 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Servidor Express en ejecución en http://localhost:${port}`);
 });
+
+
+
+
+
