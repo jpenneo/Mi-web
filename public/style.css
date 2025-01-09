@@ -1,7 +1,66 @@
-body{background: #705F2E;text-align: center;}
-header{background-color:#EFE8D5;color:blue; font-family:Verdana, Geneva, Tahoma, sans-serif ;}
-main{background-color:#ECD5F0 ;color: blue;font-family: Arial, Helvetica, sans-serif;font-size: medium;}
-#app{color: red;font-weight: bold;font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: larger;}
-footer{background-color:#D5F0E8 ;}
-.direccion{color: blue;font-weight: bold;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
-.telefono{color: blue;font-weight: bold;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
+/* Estilos generales */
+body {
+    background-color: #705F2E;
+    text-align: center;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+/* Encabezado */
+header {
+    background-color: #EFE8D5;
+    color: blue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 1em 0;
+}
+
+/* Contenido principal */
+main {
+    background-color: #ECD5F0;
+    color: blue;
+    font-size: medium;
+    padding: 2em;
+}
+
+/* Aplicación dinámica */
+#app {
+    color: red;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+    margin: 1em 0;
+}
+
+/* Pie de página */
+footer {
+    background-color: #D5F0E8;
+    padding: 1em 0;
+}
+
+/* Contacto: Dirección y Teléfono */
+.direccion,
+.telefono {
+    color: blue;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 0.5em 0; /* Espaciado consistente */
+}
+
+/* Navegación (opcional para un diseño limpio) */
+nav ul {
+    list-style: none; 
+    padding: 0;
+    margin: 1em 0;
+    display: inline-flex; /* Alinear elementos horizontalmente */
+    gap: 1em; /* Espacio entre elementos */
+}
+
+nav a {
+    color: blue;
+    text-decoration: none; /* Sin subrayado */
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}

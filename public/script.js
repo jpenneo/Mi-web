@@ -1,19 +1,20 @@
-// Esta sentencia es para esperar a que el documento esté totalmente cargado. 
+// Si necesitas incluir contenido HTML y asegurar su sanitización:
+function sanitizeHTML(content) {
+    return DOMPurify.sanitize(content);  // Usar DOMPurify para limpiar el HTML
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Seleccionamos el contenedor donde queremos mostrar el mensaje.
     const app = document.getElementById('app');
     
-    // Verificar si el contenedor existe.
     if (app) {
-        // Crear un nuevo párrafo.
         const parrafo = document.createElement('p');
         
-        // Agregar texto al párrafo.
-        parrafo.textContent = "Hola desde JavaScript";
+        // Si necesitas permitir HTML, usa sanitizeHTML
+        const htmlContent = "<strong>Hola desde JavaScript</strong>";  // Ejemplo con HTML
+        parrafo.innerHTML = sanitizeHTML(htmlContent);
         
-        // Agregar el párrafo al contenedor.
         app.appendChild(parrafo);
     } else {
-        console.error("No se encontró el contenedor con id 'app'");
+        console.error("No se encontró el contenedor con id 'app'.");
     }
 });
