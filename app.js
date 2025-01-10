@@ -70,7 +70,7 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Servidor Express en ejecución en http://localhost:${port}`);
 });
-
+module.exports = app;
 
 
 
