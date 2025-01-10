@@ -32,15 +32,8 @@ app.get('/empleados', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener empleados' });
   }
 });
-// Ruta para obtener los empleados
-app.get('/empleados', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM empleados'); 
-  } catch (error) {
-    console.error('Error al obtener empleados:', error.message);
-    res.status(500).json({ error: 'Error al obtener empleados' });
-  }
-});
+
+
 // Ruta para verificar la conexión a la base de datos
 app.get('/db-status', async (req, res) => {
   try {
