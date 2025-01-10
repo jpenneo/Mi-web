@@ -1,8 +1,12 @@
-require('dotenv').config();
+require('dotenv').config();// carga variables de entorno desde .env
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
+const path = require("path");
 const { sql } = require('@vercel/postgres');
+
+// Define a port
+const PORT = 3000;
 
 // Configuración de conexión a PostgreSQL
 const pool = new Pool({
@@ -19,8 +23,14 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// Configuración de archivos estáticos (carpeta 'public')
-app.use(express.static('public'));
+// Configurar Express para servir archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, "public")));
+
+// Ruta principal para cargar el archivo index.html
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 
 // Ruta para obtener los empleados
 app.get('/empleados', async (req, res) => {
@@ -32,7 +42,6 @@ app.get('/empleados', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener empleados' });
   }
 });
-
 
 // Ruta para verificar la conexión a la base de datos
 app.get('/db-status', async (req, res) => {
@@ -65,11 +74,11 @@ app.use((req, res) => {
   res.status(404).sendFile('404.html', { root: 'public' });
 });
 
-// Configuración del puerto
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Servidor Express en ejecución en http://localhost:${port}`);
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
+
 module.exports = app;
 
 
