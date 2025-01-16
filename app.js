@@ -1,7 +1,7 @@
 require('dotenv').config();// carga variables de entorno desde .env
 const express = require('express');
 const { Pool } = require('pg');
-const cors = require('cors');
+//const cors = require('cors');
 const path = require("path");
 const { sql } = require('@vercel/postgres');
 
@@ -21,21 +21,21 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }, // Habilita SSL para conexiones seguras
 });
 
-// Configurar CORS
-const corsOptions = {
+/*Configurar CORS
+//const corsOptions = {
   origin: process.env.NODE_ENV === 'production' ? process.env.ALLOWED_ORIGIN : '*', // Configura en producción
 };
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));*/
 
 // Configurar Express para servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, "public")));
 
-// Ruta principal para cargar el archivo index.html
+// Ruta principal para cargar el archivo index.ejs
 app.get("/", (req,res) => {
   res.status(200).render("index", {pageTitle:"Mis mejores empleados"}); 
 });
 
-// Ruta para obtener y mostrar los empleados
+// Ruta para obtener y mostrar los empleados formato json
 app.get('/empleados-json', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM empleados');
@@ -65,7 +65,7 @@ app.get('/db-status', async (req, res) => {
   }
 });
 
-// Ruta para obtener los datos
+// Ruta para obtener los datos.ejs
 app.get('/datos', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM empleados');  // Consulta los empleados desde la base de datos
