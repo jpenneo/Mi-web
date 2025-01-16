@@ -8,14 +8,18 @@ const { sql } = require('@vercel/postgres');
 // Define a port
 const PORT = 3000;
 
+// Configurar el servidor Express
+const app = express();
+app.use(express.json());
+// Para que se utilice ejs
+app.set("view engine", "ejs");
+
+
 // Configuración de conexión a PostgreSQL
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`,
   ssl: { rejectUnauthorized: false }, // Habilita SSL para conexiones seguras
 });
-
-// Configurar el servidor Express
-const app = express();
 
 // Configurar CORS
 const corsOptions = {
@@ -27,21 +31,25 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Ruta principal para cargar el archivo index.html
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get("/", (req,res) => {
+  res.status(200).render("index", {pageTitle:"Mis mejores empleados"}); 
 });
 
-
-// Ruta para obtener los empleados
-app.get('/empleados', async (req, res) => {
+// Ruta para obtener y mostrar los empleados
+app.get('/empleados-json', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM empleados'); 
-    res.json(result.rows);
+      const result = await pool.query('SELECT * FROM empleados');
+      res.json(result.rows); // Devuelve los datos en formato JSON
   } catch (error) {
-    console.error('Error al obtener empleados:', error.message);
-    res.status(500).json({ error: 'Error al obtener empleados' });
+      console.error('Error al obtener empleados:', error.message);
+      res.status(500).json({ error: 'Error al obtener empleados' });
   }
 });
+// Ruta para renderizar la vista empleados.ejs 
+app.get('/empleados', (req, res) => { 
+  res.render('empleados', { pageTitle: "Empleados" });
+ });
+
 
 // Ruta para verificar la conexión a la base de datos
 app.get('/db-status', async (req, res) => {
@@ -60,18 +68,23 @@ app.get('/db-status', async (req, res) => {
 // Ruta para obtener los datos
 app.get('/datos', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM empleados'); // Cambia los campos y tabla según tu base
-    const empleados = result.rows;
-  } 
-    catch (err) {
-    console.error('Error al generar la página de datos:', err);
-    res.status(500).send('Error al cargar la página de datos');
+    const result = await pool.query('SELECT * FROM empleados');  // Consulta los empleados desde la base de datos
+
+    // Renderiza la vista datos.ejs y pasa los datos a la vista
+    res.render('datos', { 
+      empleados: result.rows,
+      pageTitle: "datos"
+    });
+  } catch (error) {
+    console.error('Error al obtener empleados:', error.message);
+    res.status(500).json({ error: 'Error al obtener empleados' });
   }
 });
 
+
 // Ruta 404 para manejar recursos no encontrados
 app.use((req, res) => {
-  res.status(404).sendFile('404.html', { root: 'public' });
+  res.status(404).render('404', { root: 'public' });
 });
 
 // Start the server
@@ -80,7 +93,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
-
-
-

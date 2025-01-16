@@ -1,5 +1,5 @@
 // Realizar la solicitud fetch a la API de empleados
-fetch('/empleados')
+fetch('/empleados-json')
   .then(response => {
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
