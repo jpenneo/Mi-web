@@ -30,6 +30,8 @@ app.use(cors(corsOptions));*/
 // Configurar Express para servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, "public")));
 
+app.set('views', path.join(__dirname, 'views'));
+
 // Ruta principal para cargar el archivo index.ejs
 app.get("/", (req,res) => {
   res.status(200).render("index", {pageTitle:"Mis mejores empleados"}); 
